@@ -1,5 +1,5 @@
 html {
-	background-color: #0000;
+	background-color: cornflowerblue;
 }
 
 header {
@@ -10,7 +10,6 @@ header {
 	left:0;
 	right:0;
 	top: 0;
-	border: 1mm solid #FFFF;
 	margin: 0;
 }
 
@@ -21,8 +20,7 @@ h1 {
 
 nav {
 	padding: 0.8% 1.73%;
-	margin-left: 5%;
-	margin-right: 5%;
+	margin: 1% 5% 0 5%;
 	font-size: 1em;
 	background-color: #CFE2F3;
 	overflow: hidden;
@@ -52,11 +50,12 @@ nav ul li {
 
 body {
 	margin: 15%;
-	margin-top: auto;
+	margin-top: 1vw;
 	margin-bottom: auto;
 	background-color: #0000;
 	background-size: 50%;
 	font-size: 1em;
+	background-color: white;
 }
 
 aside {
@@ -74,9 +73,65 @@ nav ul {
 footer {
 	background-color: #173243;
 	box-sizing: border-box;
+	height: 10%;
+	text-align: center;
+
+	color: #FFFFFF;
+	font-size: 1em;
+}
+
+/*Links*/
+footer a:link, footer a:visited {
+	color: #CFE2F3;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+footer a:hover, footer a:active {
+	color: yellow;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a:link, a:visited {
+	color: #1F345C;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+a:hover, a:active {
+	color: cornflowerblue;
+	text-decoration: none;
+	font-weight: bold;
 }
 
 /* ID items */
+#header_content {
+	margin: auto;
+	height: 15%;
+}
+
+#header_image {
+	width: 15%;
+	float: left;
+	display: block;
+}
+
+#menu_image {
+	width: 20%;
+	float: left;
+	display: block;
+}
+
+#header_text {
+	font-size: 100%;
+	display: block;
+}
+
+#non_grid_main {
+	margin-left: 2%;
+}
+
 #main_menu {
 	margin-left: 40%;
 }
@@ -106,7 +161,7 @@ footer {
 }
 
 
-/* Re-initialising for grid */
+/* Re-initialising for menu-page grid */
 header {
 	grid-area: header;
 	grid-column: 1 / 2;
@@ -128,25 +183,76 @@ aside {
 	width: 25vw;
 }
 
+/* Different grid for specials page display */
+
+#specials_grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-areas: 'view options';
+}
+
+#special_view {
+	grid-area: view;
+	margin-left: 20%;
+}
+
+#specials_options {
+	display: block;
+	grid-area: options;
+	margin: 5%;
+	margin-left: -25%;
+	margin-right: 30%;
+	padding: 1%;
+	padding-bottom: 3%;
+	background-color: #D9D9D9;
+}
+
 /* Class items */
 
-.small_grid_b, .small_grid_a {
+.small_grid_food {
 	display: grid;
-	grid-gap: 1vw;
-	grid-template-areas: 'item item';
+	grid-gap: 1vw; 
+	background-color: #f8f9f9;
+	grid-template-areas: 'food food';
 	grid-template-columns: 1fr 1fr;
 	grid-auto-rows: 7%;
 	height: auto;
 	width: auto;
 }
 
-
 .grid_box {
-	grid-area: item;
-	background-color: #f8f9f9;
+	grid-area: food;
 	grid-column: auto;
 	grid-row: auto;
+	height: 2vw;
+	width: auto;
+	padding: 4%;
+	margin: 1%;
+}
+
+.small_grid_drink {
+	display: grid;
+	grid-gap: 1vw;
+	background-color: #f8f9f9;
+	grid-template-areas: 'drink drink';
+	grid-template-columns: 1fr 1fr;
+	grid-auto-rows: 7%;
 	height: auto;
 	width: auto;
-	padding: 2.5%;
+}
+
+.grid_box_drink {
+	grid-area: drink;
+	grid-gap: 1vw;
+	grid-column: auto;
+	grid-row: auto;
+	height: 2vw;
+	width: auto;
+	padding: 4%;
+	margin: 1%;
+}
+
+.item_info {
+	padding: 0;
+	font-size: 1em;
 }
