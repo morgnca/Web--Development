@@ -76,6 +76,8 @@ if ($sort == 'vege') {
 	
 		<body>
 			<header>
+				<img id="header_image" src="images/wegc_logo.png" alt="The logo for Wellington East Girls' College">
+				<br>
 				<h1>Wellington East Girl's College</h1>
 				<h1>Cafe Website</h1>
 			</header>
