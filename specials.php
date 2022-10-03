@@ -67,7 +67,7 @@ $specials_menu_result = mysqli_query($dbcon, $specials_menu_query);
 		</ul>
 	</nav>
 	
-	<main>
+	<main id="specials_grid">
 		<div id = "special_view">
 			<h2>View Specials</h2>
 			<?php
