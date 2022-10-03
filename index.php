@@ -1,3 +1,13 @@
+<?php 
+/* Connect to database */              /* Username*/  /* Passsword*/
+$dbcon = mysqli_connect("localhost", "morganchongarke", "LtS3V56", "morganchongarke_assessment_v2");
+	
+
+/*Specials query - dropdown menu*/
+$specials_form_query = "SELECT week_number FROM specials_info ORDER BY week_number ASC";
+$specials_form_result = mysqli_query($dbcon, $specials_form_query);
+?>
+
 <!doctype html>
 <html lang="en" dir="ltr">
 <head>
@@ -36,13 +46,26 @@
 			<button><a href="menu.php">Click here for the page!</a></button>
 		</div>
 		<div class="index_navbox">
-			<h2>Search for a menu item</h2>
-			<p>Write the name of a food below and click "search", this will show you the food or drink's information</p>
-		</div>
-		<div class="index_navbox">
 			<h2>View the cafe's specials</h2>
 			<p>Our cafe has a new special each week of the term, causing a food item and a drink item to have a reduced price if they are bought together</p>
 			<button><a href="specials.php">Click here for the page!</a></button>
+			
+			<h3>View the information for this week</h3>
+			<!-- Dropdown  from -->
+			<form name="special" id="special" method="get" action="specials.php">
+				<!-- Dropdown menu -->
+				<select name="special" id="special">
+					<!-- Options -->
+					<?php
+						while($special = mysqli_fetch_assoc($specials_form_result)){
+							echo "<option value = '".$special['week_number']."'>";
+							echo "Week " . $special["week_number"];
+							echo "</option>";
+						}
+					?>
+				</select>
+				<input type="submit" name = "specials_button" value="Search for this week's special!">
+			</form>
 		</div>
 	</main>
 </body>
