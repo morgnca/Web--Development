@@ -49,10 +49,14 @@ $specials_menu_result = mysqli_query($dbcon, $specials_menu_query);
 
 <body>
 	<header>
-		<img id="header_image" src="images/wegc_logo.png" alt="The logo for Wellington East Girls' College">
-		<br>
-		<h1>Wellington East Girl's College</h1>
-		<h1>Cafe Website</h1>
+		<div id="header_content">
+			<img id="header_image" src="images/wegc_logo.png" alt="The logo for Wellington East Girls' College">
+			<br>
+			<div id="header_text">
+				<h1>Wellington East Girl's College</h1>
+				<h1>Cafe Website</h1>
+			</div>
+		</div>
 	</header>
 	
 	<nav>
@@ -64,8 +68,8 @@ $specials_menu_result = mysqli_query($dbcon, $specials_menu_query);
 	</nav>
 	
 	<main>
-		<h2>View Specials</h2>
 		<div id = "special_view">
+			<h2>View Specials</h2>
 			<?php
 				echo "<h3>Week " . $special_record['week_number'] . " Specials</h3>";
 				echo "<p> Week number: ". $special_record['week_number'] . "<br>";
@@ -76,9 +80,11 @@ $specials_menu_result = mysqli_query($dbcon, $specials_menu_query);
 				}
 				echo "<p> Price: $". $special_record['new_price'] . "<br>";
 			?>
+		</div>
+		<div id="specials_options">
 			<h3>Select Another Week</h3>
 			<!-- Dropdown  from -->
-			<form name="special" id="special" method="get" action="specials.php">
+			<form name="special" id="special_form" method="get" action="specials.php">
 				<!-- Dropdown menu -->
 				<select name="special" id="special">
 					<!-- Options -->
@@ -90,14 +96,20 @@ $specials_menu_result = mysqli_query($dbcon, $specials_menu_query);
 					}
 					?>
 				</select>
+				
 				<input type="submit" name = "specials_button" value="Search">
 			</form>
+			<br>
+			<img id="menu_image" alt="a croissant and a cup of coffee" src="images/cafe_drawing.png">
+
+			<p>Find out about our other food and drinks on our menu page:</p>
+			<button onclick="location.href='menu.php'">Click here for the page!</button>
+			<br>
 		</div>
 	</main>
+	<footer>
+		©2022 Morgan C-Arkell, WEGC logo by <a href="https://www.wegc.school.nz/" target="_blank">wegc.school.nz</a>
+	</footer>
 </body>
-	
-<footer>
-	<p> Morgan C-Arkell 2022
-</footer>
 
 </html>
