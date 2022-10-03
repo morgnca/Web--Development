@@ -1,6 +1,6 @@
 <?php
 /* Connect to database */              /* Username*/  /* Passsword*/
-$dbcon = mysqli_connect("localhost", "morganchongarke", "LtS3V56", "morganchongarke_assessment");
+$dbcon = mysqli_connect("localhost", "morganchongarke", "LtS3V56", "morganchongarke_assessment_v2");
 	
 if ($dbcon == NULL) {
 	echo "Cound not connect to database";
@@ -15,26 +15,48 @@ if(isset($_GET['menu_sel'])){
 
 /*Foods display query*/
 if ($sort == 'vege') {
-	$menu_query = "SELECT * FROM foods WHERE vegetarian LIKE 'true' ORDER BY food_name";
+	$menu_query = "SELECT * FROM items WHERE vegetarian LIKE 'vegetarian' AND type = 'food' ORDER BY item_name";
 	$menu_result = mysqli_query($dbcon, $menu_query);
+	
+} else if ($sort == 'vegan') {
+	$menu_query = "SELECT * FROM items WHERE vegetarian LIKE 'vegan' AND type = 'food' ORDER BY item_name";
+	$menu_result = mysqli_query($dbcon, $menu_query);
+	
 } else if ($sort == 'dairy') {
-	$menu_query = "SELECT * FROM foods WHERE dairy LIKE 'false' ORDER BY food_name";
+	$menu_query = "SELECT * FROM items WHERE dairy_free LIKE 'true' AND type = 'food' ORDER BY item_name";
 	$menu_result = mysqli_query($dbcon, $menu_query);
+	
+}  else if ($sort == 'gluten') {
+	$menu_query = "SELECT * FROM items WHERE gluten_free LIKE 'true' AND type = 'food' ORDER BY item_name";
+	$menu_result = mysqli_query($dbcon, $menu_query);
+	
 } else if ($sort == 'all') {
-	$menu_query = "SELECT * FROM foods ORDER BY food_name";
+	$menu_query = "SELECT * FROM items WHERE type = 'food' ORDER BY item_name";
 	$menu_result = mysqli_query($dbcon, $menu_query);
-} else {
-	echo "result not found";
 }
 
 /*Drinks display query*/
-if ($sort == 'dairy') {
-	$drink_menu_query = "SELECT * FROM drinks WHERE dairy LIKE 'false' ORDER BY drink_name";
+if ($sort == 'vege') {
+	$drink_menu_query = "SELECT * FROM items WHERE vegetarian LIKE 'vegetarian' AND type = 'drink' ORDER BY item_name";
 	$drink_menu_result = mysqli_query($dbcon, $drink_menu_query);
-} else {
-	$drink_menu_query = "SELECT * FROM drinks ORDER BY drink_name";
+	
+} else if ($sort == 'vegan') {
+	$drink_menu_query = "SELECT * FROM items WHERE vegetarian LIKE 'vegan' AND type = 'drink' ORDER BY item_name";
+	$drink_menu_result = mysqli_query($dbcon, $drink_menu_query);
+	
+} else if ($sort == 'dairy') {
+	$drink_menu_query = "SELECT * FROM items WHERE dairy_free LIKE 'true' AND type = 'drink' ORDER BY item_name";
+	$drink_menu_result = mysqli_query($dbcon, $drink_menu_query);
+	
+}  else if ($sort == 'gluten') {
+	$drink_menu_query = "SELECT * FROM items WHERE gluten_free LIKE 'true' AND type = 'drink' ORDER BY item_name";
+	$drink_menu_result = mysqli_query($dbcon, $drink_menu_query);
+	
+} else if ($sort == 'all') {
+	$drink_menu_query = "SELECT * FROM items WHERE type = 'drink' ORDER BY item_name";
 	$drink_menu_result = mysqli_query($dbcon, $drink_menu_query);
 }
+
 ?>
 
 <!doctype html>
@@ -48,7 +70,6 @@ if ($sort == 'dairy') {
 			<meta http-equiv="X-UA-Compatible" content="IE=edge">
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<link rel="stylesheet" href="assessment.css">
-			<!--<link rel="icon" href="images/favicon.ico" type="image/x-icon"/>-->
 	</head>
 
 	<body>
@@ -83,15 +104,26 @@ if ($sort == 'dairy') {
 							<p>Only Dairy-free</p>
 						</option>
 						
+						<option value = "gluten">
+							<p>Only Gluten-free</p>
+						</option>
+						
 						<option value = "vege">
 							<p>Only Vegetarian</p>
 						</option>
+						
+						<option value = "vegan">
+							<p>Only Vegan</p>
+						</option>
+						
+						
 					</select>
 					<input type="submit" name = "sorting_button" value="Sort the menu">
 				</form>
 				<h3>Search a Food or Drink</h3>
 				<p>Input the name of one of the items on the menu to see its details</p>
-
+				
+				<!--Form to search for an item by name-->
 				<form action = "" method = "post">
 					<input type = "text" name = 'search'>
 					<input type = "submit" name = "submit" value = "Search">
@@ -100,117 +132,75 @@ if ($sort == 'dairy') {
 						if(isset($_POST['search'])) {
 							$search = $_POST['search'];
 
-							$query1 = "SELECT * FROM foods WHERE food_name LIKE '%$search%' ORDER BY food_name";
+							$query1 = "SELECT * FROM items WHERE item_name LIKE '%$search%' ORDER BY item_name";
 							$query = mysqli_query($dbcon, $query1);
 							$count = mysqli_num_rows($query);
 							
-							$fails = "0";
-
+							//In case the search wasn't like any of the database items
 							if($count == 0){
-								$fails = "1";
+								echo "No search results";
 
 							}else{
 								$repeat = 0;
-								echo "<br> Foods Found <br><br>";
+								echo "<br> Items Found <br><br>";
 								while ($row = mysqli_fetch_array($query)) {
 									if ($count < 4) {
 
-										echo "Name: " . $row ['food_name'] . "<br>";
+										echo "Name: " . $row ['item_name'] . "<br>";
 										echo "Price: $" . $row ['price'] . "<br>";
 										if ($row['available'] == 'true') {
 											echo "Availability: in stock" . "<br>";
 										}else{
 											echo "Availability: out of stock" . "<br>";
 										}
-										if ($row['dairy'] == 'true') {
+										
+										//Checks the "enum" keys that store the dietary info
+										if ($row['dairy_free'] == 'false') {
 											echo "This food contains dairy" . "<br>";
 										}else{
 											echo "This food is dairy free" . "<br>";
 										}
-										if ($row['vegetarian'] == 'true') {
-											echo "This food is vegetarian" . "<br><br>";
+										if ($row['gluten_free'] == 'false') {
+											echo "This food contains gluten" . "<br>";
 										}else{
-											echo "This food is not vegetarian" . "<br><br>";
+											echo "This food is gluten free" . "<br>";
+										}
+										if ($row['vegetarian'] == 'vegetarian') {
+											echo "This food is vegetarian" . "<br><br>";
+										}else if ($row['vegetarian'] == 'vegan') {
+											echo "This food is vegan" . "<br><br>";
+										} else {
+											echo "This food is not vegetarian";
 										}
 									}else{
-										if ($repeat < 4) {
-											echo $row ['food_name'];
-											echo "   $" . $row ['price'];
-											if ($row['available'] == 'true') {
-												echo "   in stock";
-											}else{
-												echo "   out of stock";
-											}
-											echo "<br>";
-											if ($row['dairy'] == 'true') {
-												echo "(df)  " . "";
-											}
-											if ($row['vegetarian'] == 'true') {
-												echo "(v)";
+										if ($repeat < 8) {
+												echo $row ['item_name'];
+												echo "   $" . $row ['price'];
+												if ($row['available'] == 'true') {
+													echo "   in stock";
+												}else{
+													echo "   out of stock";
+												}
+												//Checks the "enum" keys that store the dietary info
+												if ($row['dairy_free'] == 'true') {
+													echo " (df)";
+												}
+												if ($row['gluten_free'] == 'true') {
+													echo "  (gf)";
+												}
+												if ($row['vegetarian'] == 'vegetarian') {
+													echo " (v)";
+												}else if ($row['vegetarian'] == 'vegan') {
+													echo " (ve)";
+												}
+												$repeat += 1;
 											}
 											echo "<br><br>";
-											$repeat += 1;
 										}
-									}
 								}
 							}
 							
 							echo "<br>";
-							
-							$query1 = "SELECT * FROM drinks WHERE drink_name LIKE '%$search%' ORDER BY drink_name";
-							$query = mysqli_query($dbcon, $query1);
-							$count = mysqli_num_rows($query);
-
-							if($count == 0 ) {
-								if($fails == "1") {
-									echo "There was no result to your search.";
-								}
-
-							}else{
-								$repeat = 0;
-								echo "<br> Drinks Found <br><br>";
-								while ($row = mysqli_fetch_array($query)) {
-									if ($count < 4) {
-										echo "Name: " . $row ['drink_name'] . "<br>";
-										echo "Price: $" . $row ['price'] . "<br>";
-										if ($row['available'] == 'true') {
-											echo "Availability: in stock" . "<br>";
-										}else{
-											echo "Availability: out of stock" . "<br>";
-										}
-										if ($row['dairy'] == 'true') {
-											echo "This drink is contains dairy" . "<br>";
-										}else{
-											echo "This drink is dairy free" . "<br>";
-										}
-										if ($row['vegetarian'] == 'true') {
-											echo "This drink is vegetarian" . "<br><br>";
-										}else{
-											echo "This drink is not vegetarian" . "<br><br>";
-									
-										 }
-									} else {
-										if ($repeat < 4) {
-											echo $row ['drink_name'];
-											echo "   $" . $row ['price'];
-											if ($row['available'] == 'true') {
-												echo "   in stock";
-											}else{
-												echo "   out of stock";
-											}
-											echo "<br>";
-											if ($row['dairy'] == 'true') {
-												echo "(df)  " . "";
-											}
-											if ($row['vegetarian'] == 'true') {
-												echo "(v)";
-											}
-											echo "<br><br>";
-											$repeat += 1;
-										}
-									}
-								}
-						}
 						}
 					?>
 				</form>
@@ -227,7 +217,7 @@ if ($sort == 'dairy') {
 					<?php
 						$repeat_id = 1;
 						while($food = mysqli_fetch_assoc($menu_result)) {
-							echo "<div class='grid_box'>" . $food['food_name'] . "   $" . $food['price'] . "</div>";
+							echo "<div class='grid_box'>" . $food['item_name'] . "   $" . $food['price'] . "</div>";
 							echo "<br>";
 						}
 					?>
@@ -240,7 +230,7 @@ if ($sort == 'dairy') {
 					<?php
 						$repeat_id = 1;
 						while($drink = mysqli_fetch_assoc($drink_menu_result)) {
-							echo "<div class='grid_box'>" . $drink['drink_name'] . "   $" . $drink['price'] . "</div>";
+							echo "<div class='grid_box'>" . $drink['item_name'] . "   $" . $drink['price'] . "</div>";
 							echo "<br>";
 						}	
 					?>
@@ -249,6 +239,6 @@ if ($sort == 'dairy') {
 		</main>
 	</body>
 	<footer>
-		<p> Morgan C-Arkell 2022
+		<p> Morgan C-Arkell 2022 </p>
 	</footer>
 </html>
