@@ -28,7 +28,22 @@
 	</nav>
 	
 	<main>
-		<p>description
+		<div class="index_navbox">
+			<h2>View the menu</h2>
+			<p>View the menu page of the Wellington East Girl's College cafe</p>
+			<p>The menu page can also sort depending on your dietary requirements, and can find the details of a food item just by writing in its name.</p>
+			<br>
+			<button><a href="menu.php">Click here for the page!</a></button>
+		</div>
+		<div class="index_navbox">
+			<h2>Search for a menu item</h2>
+			<p>Write the name of a food below and click "search", this will show you the food or drink's information</p>
+		</div>
+		<div class="index_navbox">
+			<h2>View the cafe's specials</h2>
+			<p>Our cafe has a new special each week of the term, causing a food item and a drink item to have a reduced price if they are bought together</p>
+			<button><a href="specials.php">Click here for the page!</a></button>
+		</div>
 	</main>
 </body>
 
