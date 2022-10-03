@@ -14,12 +14,27 @@ if(isset($_GET['menu_sel'])){
 }
 
 /*Foods display query*/
-$menu_query = "SELECT * FROM foods ORDER BY food_name";
-$menu_result = mysqli_query($dbcon, $menu_query);
+if ($sort == 'vege') {
+	$menu_query = "SELECT * FROM foods WHERE vegetarian LIKE 'true' ORDER BY food_name";
+	$menu_result = mysqli_query($dbcon, $menu_query);
+} else if ($sort == 'dairy') {
+	$menu_query = "SELECT * FROM foods WHERE dairy LIKE 'false' ORDER BY food_name";
+	$menu_result = mysqli_query($dbcon, $menu_query);
+} else if ($sort == 'all') {
+	$menu_query = "SELECT * FROM foods ORDER BY food_name";
+	$menu_result = mysqli_query($dbcon, $menu_query);
+} else {
+	echo "result not found";
+}
 
 /*Drinks display query*/
-$drink_menu_query = "SELECT * FROM drinks ORDER BY drink_name";
-$drink_menu_result = mysqli_query($dbcon, $drink_menu_query);
+if ($sort == 'dairy') {
+	$drink_menu_query = "SELECT * FROM drinks WHERE dairy LIKE 'false' ORDER BY drink_name";
+	$drink_menu_result = mysqli_query($dbcon, $drink_menu_query);
+} else {
+	$drink_menu_query = "SELECT * FROM drinks ORDER BY drink_name";
+	$drink_menu_result = mysqli_query($dbcon, $drink_menu_query);
+}
 ?>
 
 <!doctype html>
@@ -53,7 +68,27 @@ $drink_menu_result = mysqli_query($dbcon, $drink_menu_query);
 
 		<main>
 			<aside id="aside">
-				
+				<h2>Sort Menu</h2>
+				<p>Sort the menu grid by dietary requirements</p>
+				<!-- Dropdown  from -->
+				<form name="menu_form" id="menu_form" method="get" action="menu.php">
+					<!-- Dropdown menu -->
+					<select name="menu_sel" id="menu_sel">
+						<!-- Options -->
+						<option value = "all">
+							<p>Show All</p>
+						</option>
+						
+						<option value = "dairy">
+							<p>Only Dairy-free</p>
+						</option>
+						
+						<option value = "vege">
+							<p>Only Vegetarian</p>
+						</option>
+					</select>
+					<input type="submit" name = "sorting_button" value="Sort the menu">
+				</form>
 				<h3>Search a Food or Drink</h3>
 				<p>Input the name of one of the items on the menu to see its details</p>
 
@@ -98,23 +133,26 @@ $drink_menu_result = mysqli_query($dbcon, $drink_menu_query);
 											echo "This food is not vegetarian" . "<br><br>";
 										}
 									}else{
-										echo $row ['food_name'];
-										echo "   $" . $row ['price'];
-										if ($row['available'] == 'true') {
-											echo "   in stock";
-										}else{
-											echo "   out of stock";
-										}
-										echo "<br>";
-										if ($row['dairy'] == 'true') {
-											echo "(df)  " . "";
-										}
-										if ($row['vegetarian'] == 'true') {
-											echo "(v)";
-										}
-										echo "<br><br>";
+										if ($repeat < 4) {
+											echo $row ['food_name'];
+											echo "   $" . $row ['price'];
+											if ($row['available'] == 'true') {
+												echo "   in stock";
+											}else{
+												echo "   out of stock";
+											}
+											echo "<br>";
+											if ($row['dairy'] == 'true') {
+												echo "(df)  " . "";
+											}
+											if ($row['vegetarian'] == 'true') {
+												echo "(v)";
+											}
+											echo "<br><br>";
+											$repeat += 1;
 										}
 									}
+								}
 							}
 							
 							echo "<br>";
@@ -129,6 +167,7 @@ $drink_menu_result = mysqli_query($dbcon, $drink_menu_query);
 								}
 
 							}else{
+								$repeat = 0;
 								echo "<br> Drinks Found <br><br>";
 								while ($row = mysqli_fetch_array($query)) {
 									if ($count < 4) {
@@ -151,24 +190,27 @@ $drink_menu_result = mysqli_query($dbcon, $drink_menu_query);
 									
 										 }
 									} else {
-										echo $row ['drink_name'];
-										echo "   $" . $row ['price'];
-										if ($row['available'] == 'true') {
-											echo "   in stock";
-										}else{
-											echo "   out of stock";
-										}
-										echo "<br>";
-										if ($row['dairy'] == 'true') {
-											echo "(df)  " . "";
-										}
-										if ($row['vegetarian'] == 'true') {
-											echo "(v)";
-										}
-										echo "<br><br>";
+										if ($repeat < 4) {
+											echo $row ['drink_name'];
+											echo "   $" . $row ['price'];
+											if ($row['available'] == 'true') {
+												echo "   in stock";
+											}else{
+												echo "   out of stock";
+											}
+											echo "<br>";
+											if ($row['dairy'] == 'true') {
+												echo "(df)  " . "";
+											}
+											if ($row['vegetarian'] == 'true') {
+												echo "(v)";
+											}
+											echo "<br><br>";
+											$repeat += 1;
 										}
 									}
 								}
+						}
 						}
 					?>
 				</form>
