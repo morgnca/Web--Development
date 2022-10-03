@@ -72,23 +72,25 @@ if ($sort == 'vege') {
 			<link rel="stylesheet" href="assessment.css">
 	</head>
 
-	<body>
-		<header>
-			<h1>Wellington East Girl's College</h1>
+
+	
+		<body>
+			<header>
+				<h1>Wellington East Girl's College</h1>
+				<h1>Cafe Website</h1>
+			</header>
+
+			<nav>
+				<ul>
+					<li><a href="index.php">Home</a></li>
+					<li><a href="menu.php">Menu</a></li>
+					<li><a href="specials.php">Specials</a></li>
+				</ul>
+			</nav>
+	        
+		<main id = "grid_container">
 			<br>
-			<h1>Cafe Website</h1>
-		</header>
-
-		<nav>
-			<ul>
-				<li><a href="index.php">Home</a></li>
-				<li><a href="menu.php">Menu</a></li>
-				<li><a href="specials.php">Specials</a></li>
-			</ul>
-		</nav>
-
-		<main>
-			<aside id="aside">
+			<aside id="grid_box_long">
 				<h2>Sort Menu</h2>
 				<p>Sort the menu grid by dietary requirements</p>
 				<!-- Dropdown  from -->
@@ -172,6 +174,7 @@ if ($sort == 'vege') {
 										} else {
 											echo "This food is not vegetarian";
 										}
+										echo "<br><br>";
 									}else{
 										if ($repeat < 8) {
 												echo $row ['item_name'];
@@ -194,13 +197,11 @@ if ($sort == 'vege') {
 													echo " (ve)";
 												}
 												$repeat += 1;
+												echo "<br><br>";
 											}
-											echo "<br><br>";
 										}
 								}
 							}
-							
-							echo "<br>";
 						}
 					?>
 				</form>
@@ -211,28 +212,27 @@ if ($sort == 'vege') {
 					<h3>About the WEGC cafe</h3>
 				<p>The cafe sells both food and drinks that cater to dietary requiments, including vegetarian, dairy-free, as well as all of the meat served being Halal.</p>
 				</div>
-
 				<h2>All Food items</h2>
-				<div class = "grid_container">
+				<div class = "small_grid_a">
 					<?php
-						$repeat_id = 1;
 						while($food = mysqli_fetch_assoc($menu_result)) {
-							echo "<div class='grid_box'>" . $food['item_name'] . "   $" . $food['price'] . "</div>";
-							echo "<br>";
+							echo "<div class='grid_box'>";
+							echo "<div class = 'item_info'>" . $food['item_name'] . "   $" . $food['price'] . "</div>";
+							echo "</div>";	
 						}
 					?>
 				</div>
 				
-				<br><br>
+				<br><br><br><br>
 				
 				<h2>All Drink items</h2>
-				<div class = "grid_container">
+				<div class = "small_grid_b">
 					<?php
-						$repeat_id = 1;
-						while($drink = mysqli_fetch_assoc($drink_menu_result)) {
-							echo "<div class='grid_box'>" . $drink['item_name'] . "   $" . $drink['price'] . "</div>";
-							echo "<br>";
-						}	
+					    while($drink = mysqli_fetch_assoc($drink_menu_result)) {
+						    echo "<div class='grid_box'>";
+							echo "<div class = 'item_info'>" . $drink['item_name'] . "   $" . $drink['price'] . "</div>";
+							echo "</div>";
+						}
 					?>
 				</div>
 			</div>
