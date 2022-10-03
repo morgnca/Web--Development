@@ -1,0 +1,90 @@
+html {
+	background-color: #0000;
+}
+
+header {
+	background-color: #173243;
+	background-size: cover;
+	overflow: hidden;
+	box-sizing: border-box;
+	left:0;
+	right:0;
+	top: 0;
+	border: 1mm solid #FFFF;
+	margin: 0;
+}
+
+h1 {
+	color: #FFFF;
+}
+
+nav {
+	padding: 0.8% 1.73%;
+	margin-left: 5%;
+	margin-right: 5%;
+	font-size: 1em;
+	background-color: #CFE2F3;
+	overflow: hidden;
+	border: 1mm solid #5D7AAB;
+	position: sticky;
+	position: -webkit-sticky;
+	top: 0vw;
+	padding: 1.5%;
+ }
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	float: left;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+	
+nav ul li {
+	list-style: none;
+	margin: 0 2.5em 0 0;
+	padding: 0;
+	font-size: 1.0em;
+	float: left;
+}
+
+body {
+	margin: 15%;
+	margin-top: auto;
+	margin-bottom: auto;
+	background-color: #0000;
+	background-size: 50%;
+}
+
+aside {
+	width: 20%;
+	height: 80vw;
+	padding: 2.25%;
+	background: #D9D9D9;
+	float: left;
+	font-style: italic;
+	margin-top: -13.5px;
+	height: 40%;
+}
+
+nav ul {
+	list-style: none;
+	position: absolute;
+}
+
+#main_menu {
+	margin-left: 40%;
+}
+
+.grid_container {
+	background-color: #CFE2F3;
+}
+.grid_box {
+	background-color: #CFE2F3;
+	margin: 0
+	margin-left: 26.5%;
+	width: 25vw;
+	line-height: 20%;
+}
