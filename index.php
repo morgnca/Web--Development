@@ -23,10 +23,14 @@ $specials_form_result = mysqli_query($dbcon, $specials_form_query);
 
 <body>
 	<header>
-		<img id="header_image" src="images/wegc_logo.png" alt="The logo for Wellington East Girls' College">
-		<br>
-		<h1>Wellington East Girl's College</h1>
-		<h1>Cafe Website</h1>
+		<div id="header_content">
+			<img id="header_image" src="images/wegc_logo.png" alt="The logo for Wellington East Girls' College">
+			<br>
+			<div id="header_text">
+				<h1>Wellington East Girl's College</h1>
+				<h1>Cafe Website</h1>
+			</div>
+		</div>
 	</header>
 	
 	<nav>
@@ -37,22 +41,22 @@ $specials_form_result = mysqli_query($dbcon, $specials_form_query);
 		</ul>
 	</nav>
 	
-	<main>
+	<main id="non_grid_main">
 		<div class="index_navbox">
 			<h2>View the menu</h2>
 			<p>View the menu page of the Wellington East Girl's College cafe</p>
 			<p>The menu page can also sort depending on your dietary requirements, and can find the details of a food item just by writing in its name.</p>
 			<br>
-			<button><a href="menu.php">Click here for the page!</a></button>
+			<button onclick="location.href='menu.php'">Click here for the page!</button>
 		</div>
 		<div class="index_navbox">
 			<h2>View the cafe's specials</h2>
 			<p>Our cafe has a new special each week of the term, causing a food item and a drink item to have a reduced price if they are bought together</p>
-			<button><a href="specials.php">Click here for the page!</a></button>
+			<button onclick="location.href='specials.php'">Click here for the page!</button>
 			
 			<h3>View the information for this week</h3>
 			<!-- Dropdown  from -->
-			<form name="special" id="special" method="get" action="specials.php">
+			<form name="special" id="special_form" method="get" action="specials.php">
 				<!-- Dropdown menu -->
 				<select name="special" id="special">
 					<!-- Options -->
@@ -68,12 +72,12 @@ $specials_form_result = mysqli_query($dbcon, $specials_form_query);
 			</form>
 		</div>
 	</main>
-</body>
-
-<br><br>
 	
-<footer>
-	<p> Morgan C-Arkell 2022
-</footer>
+	<br><br>
+	
+	<footer>
+		<p>©2022 Morgan C-Arkell, WEGC logo by <a href="https://www.wegc.school.nz/" target="_blank">wegc.school.nz</a></p>
+	</footer>
+</body>
 	
 </html>
