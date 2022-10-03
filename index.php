@@ -19,13 +19,13 @@ $specials_form_result = mysqli_query($dbcon, $specials_form_query);
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="assessment.css">
-		<!--<link rel="icon" href="images/favicon.ico" type="image/x-icon"/>-->
 </head>
 
 <body>
 	<header>
-		<h1>Wellington East Girl's College</h1>
+		<img id="header_image" src="images/wegc_logo.png" alt="The logo for Wellington East Girls' College">
 		<br>
+		<h1>Wellington East Girl's College</h1>
 		<h1>Cafe Website</h1>
 	</header>
 	
@@ -70,6 +70,8 @@ $specials_form_result = mysqli_query($dbcon, $specials_form_query);
 	</main>
 </body>
 
+<br><br>
+	
 <footer>
 	<p> Morgan C-Arkell 2022
 </footer>
