@@ -55,7 +55,7 @@ $drink_menu_result = mysqli_query($dbcon, $drink_menu_query);
 			<div id = "main_menu">
 				<div id="descripton">
 					<h3>About the WEGC cafe</h3>
-				<p>Description</p>
+				<p>The cafe sells both food and drinks that cater to dietary requiments, including vegetarian, dairy-free, as well as all of the meat served being Halal.</p>
 				</div>
 
 				<h2>All Food items</h2>
