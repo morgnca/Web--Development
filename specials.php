@@ -1,6 +1,6 @@
 <?php
 /* Connect to database */              /* Username*/  /* Passsword*/
-$dbcon = mysqli_connect("localhost", "morganchongarke", "LtS3V56", "morganchongarke_assessment");
+$dbcon = mysqli_connect("localhost", "morganchongarke", "LtS3V56", "morganchongarke_assessment_v2");
 	
 if ($dbcon == NULL) {
 	echo "Cound not connect to database";
@@ -14,16 +14,22 @@ if(isset($_GET['special'])){
 }
 
 /*Finding Specials Query*/
-$special_query = "SELECT specials.week, foods.food_name, drinks.drink_name, specials.new_price 
-					FROM specials, foods, drinks
-					WHERE specials.food_id = foods.food_id
-					AND specials.drink_id = drinks.drink_id
-					AND specials.week = '" . $id . "'";
+$special_query = "SELECT week_number, new_price
+					FROM specials_info
+					WHERE week_number = '" . $id . "'";
 $special_result = mysqli_query($dbcon, $special_query);
 $special_record = mysqli_fetch_assoc($special_result);
 
+/*Finding the food items in specials*/
+$item_query = "SELECT items.item_name 
+				FROM items, specials_info, specials_items 
+				WHERE specials_info.week_number = '" . $id . "' 
+				AND specials_info.week_number = specials_items.week_number 
+				AND items.item_id = specials_items.item_id";
+$item_result = mysqli_query($dbcon, $item_query);
+
 /*Specials query - dropdown menu*/
-$specials_menu_query = "SELECT week FROM specials ORDER BY week ASC";
+$specials_menu_query = "SELECT week_number FROM specials_info ORDER BY week_number ASC";
 $specials_menu_result = mysqli_query($dbcon, $specials_menu_query);	
 
 ?>
@@ -39,7 +45,6 @@ $specials_menu_result = mysqli_query($dbcon, $specials_menu_query);
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="assessment.css">
-		<!--<link rel="icon" href="images/favicon.ico" type="image/x-icon"/>-->
 </head>
 
 <body>
@@ -61,10 +66,13 @@ $specials_menu_result = mysqli_query($dbcon, $specials_menu_query);
 		<h2>View Specials</h2>
 		<div id = "special_view">
 			<?php
-				echo "<h3>Week " . $special_record['week'] . " Specials</h3>";
-				echo "<p> Week number: ". $special_record['week'] . "<br>";
-				echo "<p> Food special: ". $special_record['food_name'] . "<br>";
-				echo "<p> Drink special: ". $special_record['drink_name'] . "<br>";
+				echo "<h3>Week " . $special_record['week_number'] . " Specials</h3>";
+				echo "<p> Week number: ". $special_record['week_number'] . "<br>";
+				$num = 1;
+				while ($row = mysqli_fetch_array($item_result)) {
+					echo "<p>Item ". $num . ": " . $row['item_name'];
+					$num += 1;
+				}
 				echo "<p> Price: $". $special_record['new_price'] . "<br>";
 			?>
 			<h3>Select Another Week</h3>
@@ -75,8 +83,8 @@ $specials_menu_result = mysqli_query($dbcon, $specials_menu_query);
 					<!-- Options -->
 					<?php
 					while($special = mysqli_fetch_assoc($specials_menu_result)){
-						echo "<option value = '".$special['week']."'>";
-						echo "Week " . $special["week"];
+						echo "<option value = '".$special['week_number']."'>";
+						echo "Week " . $special["week_number"];
 						echo "</option>";
 					}
 					?>
